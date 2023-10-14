@@ -16,20 +16,19 @@ CORS(app)
 jackson_family = FamilyStructure("Jackson")
 
 # Handle/serialize errors like a JSON object
-# @app.errorhandler(APIException)
-# def handle_invalid_usage(error):
-#     return jsonify(error.to_dict()), error.status_code
+@app.errorhandler(APIException)
+def handle_invalid_usage(error):
+    return jsonify(error.to_dict()), error.status_code
 
-# @app.route('/member', methods=["POST"])
-# def add_member():
-#     members = jackson_family.add_member(request.json)
-#     return jsonify(members)
+@app.route('/member', methods=["POST"])
+def add_member():
+    members = jackson_family.add_member(request.json)
+    return jsonify(members)
 
-# @app.route('/member/<int:member_id>', methods=['DELETE'])
-# def delete_members(member_id):
-
-#     members = jackson_family.delete_member(member_id)
-#     return jsonify(members)
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def delete_members(member_id):
+    jackson_family.delete_member(member_id)
+    return jsonify({"done": True}), 200
 
    
 # generate sitemap with all your endpoints
@@ -44,12 +43,12 @@ def handle_hello():
     members = jackson_family.get_all_members()
     return jsonify(members), 200
 
-# @app.route('/member/<int:member_id>', methods=['GET'])
-# def get_member(member_id):
-#     member = jackson_family.get_member(member_id)
-#     if member:
-#         return jsonify(member), 200
-#     return "No such member", 404
+@app.route('/member/<int:member_id>', methods=['GET'])
+def get_member(member_id):
+    member = jackson_family.get_member(member_id)
+    if member:
+        return jsonify(member), 200
+    return "No such member", 404
 
 
 

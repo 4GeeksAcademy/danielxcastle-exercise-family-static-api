@@ -39,9 +39,10 @@ class FamilyStructure:
         return randint(0, 99999999)
 
     def add_member(self, member):
-        member.update(
-            id=self._generateId()
-        )
+        if "id" not in member:
+            member.update(
+                id=self._generateId()
+            )
         self._members.append(member)
         return self._members
 
@@ -55,7 +56,8 @@ class FamilyStructure:
    
     def get_member(self, id):
         for member in self._members:
-            if member["id"] == id:
+            print("uh oh", member, id)
+            if member["id"] == int(id):
                 return member
             
     
